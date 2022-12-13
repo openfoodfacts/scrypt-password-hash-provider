@@ -91,6 +91,21 @@ public class Argon2HelperTest {
     }
 
     @Test
+    public void testMangaDexArgon2idPassword() {
+        var rawPassword = "testing123";
+        var hashPassword = "$argon2id$v=19$m=65536,t=4,p=1$ETNLJIojWhiW6jnhz0GitA$dReu5sV+s9VPGBqCe5nts02aXVOpNN4oFZSmubzi5Lg";
+        PasswordCredentialModel passwordCredentialModel = PasswordCredentialModel.createFromValues(
+            ALGORITHM,
+            Base64.getDecoder().decode("ETNLJIojWhiW6jnhz0GitA"),
+            DEFAULT_ITERATIONS,
+            hashPassword
+        );
+        passwordCredentialModel.setSecretData(hashPassword);
+        boolean verified = Argon2Helper.verifyPassword(rawPassword, passwordCredentialModel);
+        Assertions.assertTrue(verified);
+    }
+
+    @Test
     public void testArgon2dVerifyPredefinedWrongHash() {
         String rawPassword = "wrongpassword";
         String hash = "$argon2d$v=19$m=65536,t=1,p=1$v3evK1HhIHKHRnRNWqEfZA$T7G+ujnDpZN+kYuMngOb/2+/mIDpOn0VyLIh7B6LJiY";
