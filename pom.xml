@@ -5,13 +5,13 @@
 
   <groupId>be.cronos.keycloak</groupId>
   <artifactId>keycloak-argon2</artifactId>
-  <version>3.0.4</version>
+  <version>3.1.0</version>
   <packaging>jar</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>11</java.version>
-    <keycloak.version>20.0.5</keycloak.version>
+    <java.version>17</java.version>
+    <keycloak.version>21.0.0</keycloak.version>
     <junit.version>5.9.2</junit.version>
   </properties>
 
