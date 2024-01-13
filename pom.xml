@@ -5,7 +5,7 @@
 
   <groupId>be.cronos.keycloak</groupId>
   <artifactId>keycloak-argon2</artifactId>
-  <version>22.0.4-1</version>
+  <version>23.0.3-1</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -18,7 +18,7 @@
     <maven-shade-plugin.version>3.5.0</maven-shade-plugin.version>
     <maven-site-plugin.version>4.0.0-M6</maven-site-plugin.version>
 
-    <keycloak.version>22.0.4</keycloak.version>
+    <keycloak.version>23.0.3</keycloak.version>
     <junit.version>5.9.2</junit.version>
     <bcprov-jdk15on.version>1.70</bcprov-jdk15on.version>
   </properties>
