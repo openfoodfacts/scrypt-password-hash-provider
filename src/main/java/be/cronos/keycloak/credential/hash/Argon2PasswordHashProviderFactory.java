@@ -10,7 +10,7 @@ import org.keycloak.models.KeycloakSessionFactory;
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
 public class Argon2PasswordHashProviderFactory implements PasswordHashProviderFactory {
-    public static final String ID = "argon2";
+    public static final String ID = "scrypt";
 
     @Override
     public PasswordHashProvider create(KeycloakSession session) {

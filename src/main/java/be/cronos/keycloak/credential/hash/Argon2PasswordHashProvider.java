@@ -1,10 +1,11 @@
 package be.cronos.keycloak.credential.hash;
 
-import be.cronos.keycloak.enums.Argon2Variant;
 import be.cronos.keycloak.policy.*;
 import be.cronos.keycloak.utils.Argon2EncodingUtils;
 import be.cronos.keycloak.utils.Argon2Helper;
+
 import org.jboss.logging.Logger;
+import org.keycloak.common.util.MultivaluedHashMap;
 import org.keycloak.credential.hash.PasswordHashProvider;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.PasswordPolicy;
@@ -35,16 +36,16 @@ public class Argon2PasswordHashProvider implements PasswordHashProvider {
         // The stored password is a argon2 hash and hence checking the specific parameters of the policy is required.
 
         // Get the credential's Argon2 parameters
-        Argon2EncodingUtils.Argon2Parameters storedArgon2Parameters = Argon2EncodingUtils.extractArgon2ParametersFromEncodedPassword(credential.getPasswordSecretData().getValue());
+        Argon2EncodingUtils.Argon2Parameters storedArgon2Parameters = Argon2EncodingUtils
+                .extractArgon2ParametersFromCredentials(credential.getPasswordSecretData().getValue(),
+                        credential.getPasswordCredentialData().getAdditionalParameters());
         // Get the configured Argon2 parameters
         Argon2EncodingUtils.Argon2Parameters configuredArgon2Parameters = getConfiguredArgon2Parameters();
 
         // Perform a comparison on whether a re-hash is needed
-        boolean meetsRealmPolicy = storedArgon2Parameters.getArgon2Variant().getArgon2BouncyCastle() == configuredArgon2Parameters.getArgon2Variant().getArgon2BouncyCastle()
-                && storedArgon2Parameters.getVersion() == configuredArgon2Parameters.getVersion()
-                && storedArgon2Parameters.getMemory() == configuredArgon2Parameters.getMemory()
-                && storedArgon2Parameters.getIterations() == configuredArgon2Parameters.getIterations()
-                && storedArgon2Parameters.getParallelism() == configuredArgon2Parameters.getParallelism();
+        boolean meetsRealmPolicy = storedArgon2Parameters.getParallellism() == configuredArgon2Parameters.getParallellism()
+                && storedArgon2Parameters.getCost() == configuredArgon2Parameters.getCost()
+                && storedArgon2Parameters.getBlockSize() == configuredArgon2Parameters.getBlockSize();
 
         LOG.debugf("< policyCheck() -> Stored password meets Realm Password Policy = '%s'.", String.valueOf(meetsRealmPolicy));
         return meetsRealmPolicy;
@@ -64,16 +65,17 @@ public class Argon2PasswordHashProvider implements PasswordHashProvider {
         String hash = Argon2Helper.hashPassword(
                 rawPassword,
                 salt,
-                configuredArgon2Parameters.getArgon2Variant(),
-                configuredArgon2Parameters.getVersion(),
-                configuredArgon2Parameters.getIterations(),
-                configuredArgon2Parameters.getParallelism(),
-                configuredArgon2Parameters.getMemory(),
+                configuredArgon2Parameters.getCost(),
+                configuredArgon2Parameters.getBlockSize(),
+                configuredArgon2Parameters.getParallellism(),
                 configuredArgon2Parameters.getHashLength()
         );
 
         LOG.debugf("< encodedCredential()");
-        return PasswordCredentialModel.createFromValues(providerId, salt, configuredArgon2Parameters.getIterations(), hash);
+        PasswordCredentialModel result = PasswordCredentialModel.createFromValues(providerId, salt, configuredArgon2Parameters.getCost(), hash);
+        MultivaluedHashMap<String, String> additionalParameters = result.getPasswordCredentialData().getAdditionalParameters();
+        Argon2EncodingUtils.setScryptParametersInAdditionalData(configuredArgon2Parameters, additionalParameters);
+        return result;
     }
 
     @Override
@@ -105,8 +107,6 @@ public class Argon2PasswordHashProvider implements PasswordHashProvider {
 
     private Argon2EncodingUtils.Argon2Parameters getConfiguredArgon2Parameters() {
         return new Argon2EncodingUtils.Argon2Parameters(
-                Argon2Variant.parseVariant(getDefaultValue(Argon2VariantPasswordPolicyProviderFactory.ID, Argon2VariantPasswordPolicyProviderFactory.DEFAULT_ARGON2_VARIANT)),
-                getDefaultValue(Argon2VersionPasswordPolicyProviderFactory.ID, Argon2VersionPasswordPolicyProviderFactory.DEFAULT_VERSION),
                 getDefaultValue(Argon2MemoryPasswordPolicyProviderFactory.ID, Argon2MemoryPasswordPolicyProviderFactory.DEFAULT_MEMORY),
                 getDefaultValue(Argon2IterationsPasswordPolicyProviderFactory.ID, Argon2IterationsPasswordPolicyProviderFactory.DEFAULT_ITERATIONS),
                 getDefaultValue(Argon2ParallelismPasswordPolicyProviderFactory.ID, Argon2ParallelismPasswordPolicyProviderFactory.DEFAULT_PARALLELISM),
