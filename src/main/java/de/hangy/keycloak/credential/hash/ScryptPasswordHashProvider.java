@@ -68,14 +68,10 @@ public class ScryptPasswordHashProvider implements PasswordHashProvider {
                 configuredScryptParameters.getCost(),
                 configuredScryptParameters.getBlockSize(),
                 configuredScryptParameters.getParallellism(),
-                configuredScryptParameters.getHashLength()
-        );
+                configuredScryptParameters.getHashLength());
 
         LOG.debugf("< encodedCredential()");
-        PasswordCredentialModel result = PasswordCredentialModel.createFromValues(providerId, salt, configuredScryptParameters.getCost(), hash);
-        MultivaluedHashMap<String, String> additionalParameters = result.getPasswordCredentialData().getAdditionalParameters();
-        ScryptEncodingUtils.setScryptParametersInAdditionalData(configuredScryptParameters, additionalParameters);
-        return result;
+        return ScryptEncodingUtils.createPasswordCredentialModel(salt, hash, configuredScryptParameters);
     }
 
     @Override

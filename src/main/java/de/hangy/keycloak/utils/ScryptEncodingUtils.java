@@ -1,12 +1,18 @@
 package de.hangy.keycloak.utils;
 
+import de.hangy.keycloak.credential.hash.ScryptPasswordHashProviderFactory;
 import de.hangy.keycloak.exceptions.ScryptRuntimeException;
 import de.hangy.keycloak.policy.ScryptHashLengthPasswordPolicyProviderFactory;
 import de.hangy.keycloak.policy.ScryptSaltLengthPasswordPolicyProviderFactory;
 
+import java.io.IOException;
 import java.util.Base64;
 
 import org.keycloak.common.util.MultivaluedHashMap;
+import org.keycloak.models.credential.PasswordCredentialModel;
+import org.keycloak.models.credential.dto.PasswordCredentialData;
+import org.keycloak.models.credential.dto.PasswordSecretData;
+import org.keycloak.util.JsonSerialization;
 
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
@@ -30,11 +36,28 @@ public class ScryptEncodingUtils {
         return explodedEncodedPassword[explodedEncodedPassword.length - 1];
     }
 
-    public static void setScryptParametersInAdditionalData(ScryptEncodingUtils.ScryptParameters scryptParameters,
-            MultivaluedHashMap<String, String> additionalData) {
-        additionalData.putSingle(COST, Integer.toString(scryptParameters.getCost()));
-        additionalData.putSingle(BLOCK_SIZE, Integer.toString(scryptParameters.getBlockSize()));
-        additionalData.putSingle(PARALLELISM, Integer.toString(scryptParameters.getParallellism()));
+    public static PasswordCredentialModel createPasswordCredentialModel(byte[] salt, String encodedPassword,
+            ScryptEncodingUtils.ScryptParameters scryptParameters) {
+        PasswordCredentialData credentialData = new PasswordCredentialData(-1, ScryptPasswordHashProviderFactory.ID);
+        PasswordSecretData secretData = new PasswordSecretData(encodedPassword, salt);
+        MultivaluedHashMap<String, String> additionalParameters = credentialData.getAdditionalParameters();
+        additionalParameters.putSingle(ScryptEncodingUtils.COST, Integer.toString(scryptParameters.getCost()));
+        additionalParameters.putSingle(ScryptEncodingUtils.BLOCK_SIZE,
+                Integer.toString(scryptParameters.getBlockSize()));
+        additionalParameters.putSingle(ScryptEncodingUtils.PARALLELISM,
+                Integer.toString(scryptParameters.getParallellism()));
+
+        PasswordCredentialModel passwordCredentialModel = PasswordCredentialModel.createFromValues(credentialData,
+                secretData);
+
+        try {
+            passwordCredentialModel.setCredentialData(JsonSerialization.writeValueAsString(credentialData));
+            passwordCredentialModel.setSecretData(JsonSerialization.writeValueAsString(secretData));
+            passwordCredentialModel.setType(PasswordCredentialModel.TYPE);
+            return passwordCredentialModel;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static ScryptEncodingUtils.ScryptParameters extractScryptParametersFromCredentials(
