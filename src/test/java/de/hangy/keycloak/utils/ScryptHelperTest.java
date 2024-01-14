@@ -1,4 +1,4 @@
-package be.cronos.keycloak.utils;
+package de.hangy.keycloak.utils;
 
 import java.util.Base64;
 
@@ -9,15 +9,15 @@ import org.junit.jupiter.api.function.Executable;
 import org.keycloak.common.util.MultivaluedHashMap;
 import org.keycloak.models.credential.PasswordCredentialModel;
 
-import be.cronos.keycloak.credential.hash.Argon2PasswordHashProviderFactory;
-import be.cronos.keycloak.policy.Argon2HashLengthPasswordPolicyProviderFactory;
+import de.hangy.keycloak.credential.hash.ScryptPasswordHashProviderFactory;
+import de.hangy.keycloak.policy.ScryptHashLengthPasswordPolicyProviderFactory;
 
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
-public class Argon2HelperTest {
+public class ScryptHelperTest {
 
-    private static final String ALGORITHM = Argon2PasswordHashProviderFactory.ID;
+    private static final String ALGORITHM = ScryptPasswordHashProviderFactory.ID;
 
     private static final int DEFAULT_COST = 16384;
 
@@ -29,20 +29,20 @@ public class Argon2HelperTest {
 
     @BeforeEach
     public void generateSalt() {
-        salt = Argon2Helper.getSalt(16);
+        salt = ScryptHelper.getSalt(16);
     }
 
     @Test
-    public void testArgon2dHashAndVerifySamePassword() {
+    public void testScryptdHashAndVerifySamePassword() {
         int cost = DEFAULT_COST;
         String rawPassword = "123456789";
-        String hash = Argon2Helper.hashPassword(
+        String hash = ScryptHelper.hashPassword(
                 rawPassword,
                 salt,
                 cost,
                 DEFAULT_BLOCK_SIZE,
                 DEFAULT_PARALLELISM,
-                Argon2HashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH);
+                ScryptHashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH);
         PasswordCredentialModel passwordCredentialModel = PasswordCredentialModel.createFromValues(ALGORITHM, salt,
                 cost, hash);
         passwordCredentialModel.setSecretData(hash);
@@ -51,21 +51,21 @@ public class Argon2HelperTest {
                 cost,
                 DEFAULT_BLOCK_SIZE,
                 DEFAULT_PARALLELISM);
-        boolean verified = Argon2Helper.verifyPassword(rawPassword, passwordCredentialModel);
+        boolean verified = ScryptHelper.verifyPassword(rawPassword, passwordCredentialModel);
         Assertions.assertTrue(verified);
     }
 
     @Test
-    public void testArgon2dHashAndVerifyDifferentPassword() {
+    public void testScryptdHashAndVerifyDifferentPassword() {
         int cost = DEFAULT_COST;
         String rawPassword = "iloveyou";
-        String hash = Argon2Helper.hashPassword(
+        String hash = ScryptHelper.hashPassword(
                 rawPassword,
                 salt,
                 cost,
                 DEFAULT_BLOCK_SIZE,
                 DEFAULT_PARALLELISM,
-                Argon2HashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH);
+                ScryptHashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH);
         PasswordCredentialModel passwordCredentialModel = PasswordCredentialModel.createFromValues(ALGORITHM, salt,
                 cost, hash);
         passwordCredentialModel.setSecretData(hash);
@@ -74,12 +74,12 @@ public class Argon2HelperTest {
                 cost,
                 DEFAULT_BLOCK_SIZE,
                 DEFAULT_PARALLELISM);
-        boolean verified = Argon2Helper.verifyPassword("gwerty123", passwordCredentialModel);
+        boolean verified = ScryptHelper.verifyPassword("gwerty123", passwordCredentialModel);
         Assertions.assertFalse(verified);
     }
 
     @Test
-    public void testArgon2dVerifyPredefinedHash() {
+    public void testScryptdVerifyPredefinedHash() {
         String rawPassword = "supersecret";
         String hash = "OaqIIbkVDDjH3OvyrkHAsUvIARzbhMD7REHMHmxjdPQ";
         PasswordCredentialModel passwordCredentialModel = PasswordCredentialModel.createFromValues(
@@ -93,12 +93,12 @@ public class Argon2HelperTest {
                 DEFAULT_COST,
                 DEFAULT_BLOCK_SIZE,
                 DEFAULT_PARALLELISM);
-        boolean verified = Argon2Helper.verifyPassword(rawPassword, passwordCredentialModel);
+        boolean verified = ScryptHelper.verifyPassword(rawPassword, passwordCredentialModel);
         Assertions.assertTrue(verified);
     }
 
     @Test
-    public void testArgon2dVerifyPredefinedWrongHash() {
+    public void testScryptdVerifyPredefinedWrongHash() {
         String rawPassword = "supersecret";
         String hash = "TMoKd43AKZSsDakIZf52DccKPvQQNUE//wmOl5gxvIM=";
         PasswordCredentialModel passwordCredentialModel = PasswordCredentialModel.createFromValues(
@@ -112,12 +112,12 @@ public class Argon2HelperTest {
                 DEFAULT_COST,
                 DEFAULT_BLOCK_SIZE,
                 DEFAULT_PARALLELISM);
-        boolean verified = Argon2Helper.verifyPassword(rawPassword, passwordCredentialModel);
+        boolean verified = ScryptHelper.verifyPassword(rawPassword, passwordCredentialModel);
         Assertions.assertFalse(verified);
     }
 
     @Test
-    public void testArgon2dVerifyPredefinedWrongSalt() {
+    public void testScryptdVerifyPredefinedWrongSalt() {
         String rawPassword = "supersecret";
         String hash = "OaqIIbkVDDjH3OvyrkHAsUvIARzbhMD7REHMHmxjdPQ";
         PasswordCredentialModel passwordCredentialModel = PasswordCredentialModel.createFromValues(
@@ -131,7 +131,7 @@ public class Argon2HelperTest {
                 DEFAULT_COST,
                 DEFAULT_BLOCK_SIZE,
                 DEFAULT_PARALLELISM);
-        boolean verified = Argon2Helper.verifyPassword(rawPassword, passwordCredentialModel);
+        boolean verified = ScryptHelper.verifyPassword(rawPassword, passwordCredentialModel);
         Assertions.assertFalse(verified);
     }
 
@@ -139,13 +139,13 @@ public class Argon2HelperTest {
     public void testHashPasswordHashEmptyPassword() {
         Assertions.assertThrows(
                 RuntimeException.class,
-                () -> Argon2Helper.hashPassword(
+                () -> ScryptHelper.hashPassword(
                         null,
                         salt,
                         DEFAULT_COST,
                         DEFAULT_BLOCK_SIZE,
                         DEFAULT_PARALLELISM,
-                        Argon2HashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH));
+                        ScryptHashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH));
     }
 
     @Test
@@ -156,20 +156,20 @@ public class Argon2HelperTest {
                 DEFAULT_COST, tamperedHash);
         passwordCredentialModel.setSecretData(tamperedHash);
         Assertions.assertThrows(RuntimeException.class,
-                () -> Argon2Helper.verifyPassword(rawPassword, passwordCredentialModel));
+                () -> ScryptHelper.verifyPassword(rawPassword, passwordCredentialModel));
     }
 
     @Test
     public void testHashPasswordNegativeIterations() {
         int iterations = -1;
         String rawPassword = "novariantdefined";
-        Executable exec = () -> Argon2Helper.hashPassword(
+        Executable exec = () -> ScryptHelper.hashPassword(
                 rawPassword,
                 salt,
                 iterations,
                 DEFAULT_BLOCK_SIZE,
                 DEFAULT_PARALLELISM,
-                Argon2HashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH);
+                ScryptHashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH);
         Assertions.assertThrows(RuntimeException.class, exec);
     }
 
@@ -177,13 +177,13 @@ public class Argon2HelperTest {
     public void testHashPasswordNoParallelism() {
         int parallelism = 0;
         String rawPassword = "novariantdefined";
-        Executable call = () -> Argon2Helper.hashPassword(
+        Executable call = () -> ScryptHelper.hashPassword(
                 rawPassword,
                 salt,
                 DEFAULT_COST,
                 DEFAULT_BLOCK_SIZE,
                 parallelism,
-                Argon2HashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH);
+                ScryptHashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH);
         Assertions.assertThrows(RuntimeException.class, call);
     }
 
@@ -191,25 +191,25 @@ public class Argon2HelperTest {
     public void testHashPasswordNoMemory() {
         int memory = 0;
         String rawPassword = "novariantdefined";
-        Executable call = () -> Argon2Helper.hashPassword(
+        Executable call = () -> ScryptHelper.hashPassword(
                 rawPassword,
                 salt,
                 DEFAULT_COST,
                 memory,
                 DEFAULT_PARALLELISM,
-                Argon2HashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH);
+                ScryptHashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH);
         Assertions.assertThrows(RuntimeException.class, call);
     }
 
     @Test
     public void testVerifyPasswordNonsenseData() {
-        String rawPassword = "testargon2id";
+        String rawPassword = "testscryptid";
         String hash = "nonsense";
         PasswordCredentialModel passwordCredentialModel = PasswordCredentialModel.createFromValues(ALGORITHM,
                 "".getBytes(), DEFAULT_COST, hash);
         passwordCredentialModel.setSecretData(hash);
         Assertions.assertThrows(RuntimeException.class,
-                () -> Argon2Helper.verifyPassword(rawPassword, passwordCredentialModel));
+                () -> ScryptHelper.verifyPassword(rawPassword, passwordCredentialModel));
     }
 
     private static void setAdditionalParameters(PasswordCredentialModel passwordCredentialModel, int N, int r, int p) {

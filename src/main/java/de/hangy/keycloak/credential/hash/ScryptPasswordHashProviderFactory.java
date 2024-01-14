@@ -1,4 +1,4 @@
-package be.cronos.keycloak.credential.hash;
+package de.hangy.keycloak.credential.hash;
 
 import org.keycloak.Config;
 import org.keycloak.credential.hash.PasswordHashProvider;
@@ -9,12 +9,12 @@ import org.keycloak.models.KeycloakSessionFactory;
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
-public class Argon2PasswordHashProviderFactory implements PasswordHashProviderFactory {
+public class ScryptPasswordHashProviderFactory implements PasswordHashProviderFactory {
     public static final String ID = "scrypt";
 
     @Override
     public PasswordHashProvider create(KeycloakSession session) {
-        return new Argon2PasswordHashProvider(ID, session);
+        return new ScryptPasswordHashProvider(ID, session);
     }
 
     @Override

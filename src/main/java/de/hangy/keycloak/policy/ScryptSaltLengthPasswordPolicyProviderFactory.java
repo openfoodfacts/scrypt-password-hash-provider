@@ -1,10 +1,10 @@
-package be.cronos.keycloak.policy;
+package de.hangy.keycloak.policy;
 
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
-public class Argon2SaltLengthPasswordPolicyProviderFactory extends Argon2GenericPolicyProviderFactory {
-    public static final String ID = "argon2SaltLength";
+public class ScryptSaltLengthPasswordPolicyProviderFactory extends ScryptGenericPolicyProviderFactory {
+    public static final String ID = "scryptSaltLength";
     public static final int DEFAULT_SALT_LENGTH = 16;
 
     @Override
@@ -14,7 +14,7 @@ public class Argon2SaltLengthPasswordPolicyProviderFactory extends Argon2Generic
 
     @Override
     public String getDisplayName() {
-        return "Argon2 Salt Length";
+        return "scrypt Salt Length";
     }
 
     @Override

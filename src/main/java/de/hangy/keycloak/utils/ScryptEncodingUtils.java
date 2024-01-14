@@ -1,8 +1,8 @@
-package be.cronos.keycloak.utils;
+package de.hangy.keycloak.utils;
 
-import be.cronos.keycloak.exceptions.Argon2RuntimeException;
-import be.cronos.keycloak.policy.Argon2HashLengthPasswordPolicyProviderFactory;
-import be.cronos.keycloak.policy.Argon2SaltLengthPasswordPolicyProviderFactory;
+import de.hangy.keycloak.exceptions.ScryptRuntimeException;
+import de.hangy.keycloak.policy.ScryptHashLengthPasswordPolicyProviderFactory;
+import de.hangy.keycloak.policy.ScryptSaltLengthPasswordPolicyProviderFactory;
 
 import java.util.Base64;
 
@@ -11,14 +11,14 @@ import org.keycloak.common.util.MultivaluedHashMap;
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
-public class Argon2EncodingUtils {
+public class ScryptEncodingUtils {
     private static final String COST = "N";
 
     private static final String BLOCK_SIZE = "r";
 
     private static final String PARALLELISM = "p";
 
-    private Argon2EncodingUtils() {
+    private ScryptEncodingUtils() {
         // noop
     }
 
@@ -30,14 +30,14 @@ public class Argon2EncodingUtils {
         return explodedEncodedPassword[explodedEncodedPassword.length - 1];
     }
 
-    public static void setScryptParametersInAdditionalData(Argon2EncodingUtils.Argon2Parameters argon2Parameters,
+    public static void setScryptParametersInAdditionalData(ScryptEncodingUtils.ScryptParameters scryptParameters,
             MultivaluedHashMap<String, String> additionalData) {
-        additionalData.putSingle(COST, Integer.toString(argon2Parameters.getCost()));
-        additionalData.putSingle(BLOCK_SIZE, Integer.toString(argon2Parameters.getBlockSize()));
-        additionalData.putSingle(PARALLELISM, Integer.toString(argon2Parameters.getParallellism()));
+        additionalData.putSingle(COST, Integer.toString(scryptParameters.getCost()));
+        additionalData.putSingle(BLOCK_SIZE, Integer.toString(scryptParameters.getBlockSize()));
+        additionalData.putSingle(PARALLELISM, Integer.toString(scryptParameters.getParallellism()));
     }
 
-    public static Argon2EncodingUtils.Argon2Parameters extractArgon2ParametersFromCredentials(
+    public static ScryptEncodingUtils.ScryptParameters extractScryptParametersFromCredentials(
             final String storedEncodedPassword,
             final MultivaluedHashMap<String, String> credentialParameters) {
         if (credentialParameters == null) {
@@ -56,11 +56,11 @@ public class Argon2EncodingUtils {
             parallelism = extractParallelism(credentialParameters);
             hashLength = getDigestLength(storedEncodedPassword);
         } catch (Exception e) {
-            throw new Argon2RuntimeException(e.getMessage(), e);
+            throw new ScryptRuntimeException(e.getMessage(), e);
         }
         // If we reach this point, all parameters were found and we return the
-        // Argon2Parameters carry object
-        return new Argon2EncodingUtils.Argon2Parameters(cost, blockSize, parallelism, hashLength);
+        // ScryptParameters carry object
+        return new ScryptEncodingUtils.ScryptParameters(cost, blockSize, parallelism, hashLength);
     }
 
     public static int extractCost(MultivaluedHashMap<String, String> credentialParameters) {
@@ -82,24 +82,24 @@ public class Argon2EncodingUtils {
         return Base64.getDecoder().decode(base64EncodedString).length;
     }
 
-    public static class Argon2Parameters {
+    public static class ScryptParameters {
         private final int cost;
         private final int blockSize;
         private final int parallelism;
         private final int hashLength;
         private final int saltLength;
 
-        public Argon2Parameters(int cost, int blockSize, int parallelism) {
-            this(cost, blockSize, parallelism, Argon2HashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH,
-                    Argon2SaltLengthPasswordPolicyProviderFactory.DEFAULT_SALT_LENGTH);
+        public ScryptParameters(int cost, int blockSize, int parallelism) {
+            this(cost, blockSize, parallelism, ScryptHashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH,
+                    ScryptSaltLengthPasswordPolicyProviderFactory.DEFAULT_SALT_LENGTH);
         }
 
-        public Argon2Parameters(int cost, int blockSize, int parallelism, int hashLength) {
+        public ScryptParameters(int cost, int blockSize, int parallelism, int hashLength) {
             this(cost, blockSize, parallelism, hashLength,
-                    Argon2SaltLengthPasswordPolicyProviderFactory.DEFAULT_SALT_LENGTH);
+                    ScryptSaltLengthPasswordPolicyProviderFactory.DEFAULT_SALT_LENGTH);
         }
 
-        public Argon2Parameters(int cost, int blockSize, int parallelism, int hashLength, int saltLength) {
+        public ScryptParameters(int cost, int blockSize, int parallelism, int hashLength, int saltLength) {
             this.cost = cost;
             this.blockSize = blockSize;
             this.parallelism = parallelism;

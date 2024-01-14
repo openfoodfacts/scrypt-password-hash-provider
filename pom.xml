@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <name>Argon2 Password Hash Provider</name>
+  <name>scrypt Password Hash Provider</name>
 
-  <groupId>be.cronos.keycloak</groupId>
-  <artifactId>keycloak-argon2</artifactId>
+  <groupId>de.hangy.keycloak</groupId>
+  <artifactId>keycloak-scrypt</artifactId>
   <version>23.0.3-1</version>
   <packaging>jar</packaging>
 
@@ -24,7 +24,7 @@
   </properties>
 
   <build>
-    <finalName>keycloak-argon2-${project.version}</finalName>
+    <finalName>keycloak-scrypt-${project.version}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

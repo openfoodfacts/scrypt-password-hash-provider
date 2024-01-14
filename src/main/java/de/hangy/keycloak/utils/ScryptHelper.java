@@ -1,6 +1,6 @@
-package be.cronos.keycloak.utils;
+package de.hangy.keycloak.utils;
 
-import be.cronos.keycloak.exceptions.Argon2RuntimeException;
+import de.hangy.keycloak.exceptions.ScryptRuntimeException;
 import org.bouncycastle.crypto.generators.SCrypt;
 import org.bouncycastle.util.Strings;
 import org.jboss.logging.Logger;
@@ -16,12 +16,12 @@ import java.util.Base64;
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
-public class Argon2Helper {
-    private static final Logger LOG = Logger.getLogger(Argon2Helper.class);
+public class ScryptHelper {
+    private static final Logger LOG = Logger.getLogger(ScryptHelper.class);
 
     private static final Charset CHARSET = StandardCharsets.UTF_8;
 
-    private Argon2Helper() {
+    private ScryptHelper() {
         throw new IllegalStateException("Helper class");
     }
 
@@ -29,9 +29,9 @@ public class Argon2Helper {
             int r, int p, int dkLen) {
 
         if (rawPassword == null)
-            throw new Argon2RuntimeException("Password can't be empty");
+            throw new ScryptRuntimeException("Password can't be empty");
 
-        LOG.debugf("Using the following Argon2 settings:");
+        LOG.debugf("Using the following Scrypt settings:");
         LOG.debugf("\tCPU/memory cost: %d", N);
         LOG.debugf("\tBlock Size: %d", r);
         LOG.debugf("\tParallellism: %d", p);
@@ -51,12 +51,12 @@ public class Argon2Helper {
             // Print the hashing runtime for debug purposes
             LOG.debugf("Hashing runtime was %d milliseconds (%d seconds).", end - start, (end - start) / 1000);
 
-            // Return an encoded representation of the argon2 password hash
+            // Return an encoded representation of the scrypt password hash
             return Base64.getEncoder().withoutPadding().encodeToString(result);
         } catch (Exception e) {
             LOG.errorf("Something went wrong while hashing the password, message = '%s'", e.getMessage());
         }
-        throw new Argon2RuntimeException("Something went wrong while securing the password.");
+        throw new ScryptRuntimeException("Something went wrong while securing the password.");
     }
 
     public static boolean verifyPassword(String rawPassword, PasswordCredentialModel credential) {
@@ -68,33 +68,33 @@ public class Argon2Helper {
         MultivaluedHashMap<String, String> additionalParameters = credential.getPasswordCredentialData().getAdditionalParameters();
         if (additionalParameters == null) {
             LOG.errorf("There's something wrong with the stored password encoding, couldn't find the parameters.");
-            throw new Argon2RuntimeException("Something went wrong.");
+            throw new ScryptRuntimeException("Something went wrong.");
         }
 
-        Argon2EncodingUtils.Argon2Parameters argon2Parameters = Argon2EncodingUtils
-                .extractArgon2ParametersFromCredentials(storedEncodedPassword, additionalParameters);
+        ScryptEncodingUtils.ScryptParameters scryptParameters = ScryptEncodingUtils
+                .extractScryptParametersFromCredentials(storedEncodedPassword, additionalParameters);
 
         // Extract the digest
-        String storedPasswordDigest = Argon2EncodingUtils.extractDigest(storedEncodedPassword);
+        String storedPasswordDigest = ScryptEncodingUtils.extractDigest(storedEncodedPassword);
         if (storedPasswordDigest == null) {
             LOG.errorf("There's something wrong with the stored password encoding, couldn't find the actual hash.");
-            throw new Argon2RuntimeException("Something went wrong.");
+            throw new ScryptRuntimeException("Something went wrong.");
         }
 
         // Hash the incoming password (according to stored password's parameters)
         String attemptedEncodedPassword = hashPassword(
                 rawPassword,
                 salt,
-                argon2Parameters.getCost(),
-                argon2Parameters.getBlockSize(),
-                argon2Parameters.getParallellism(),
-                argon2Parameters.getHashLength());
+                scryptParameters.getCost(),
+                scryptParameters.getBlockSize(),
+                scryptParameters.getParallellism(),
+                scryptParameters.getHashLength());
 
         // Extract the digest of the attempted hashed password
-        String attemptedPasswordDigest = Argon2EncodingUtils.extractDigest(attemptedEncodedPassword);
+        String attemptedPasswordDigest = ScryptEncodingUtils.extractDigest(attemptedEncodedPassword);
         if (attemptedPasswordDigest == null) {
             LOG.errorf("There's something wrong with the attempted password encoding, couldn't find the actual hash.");
-            throw new Argon2RuntimeException("Something went wrong.");
+            throw new ScryptRuntimeException("Something went wrong.");
         }
 
         // Compare the 2 digests using constant-time comparison

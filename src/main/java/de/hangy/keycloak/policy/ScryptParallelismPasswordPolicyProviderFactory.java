@@ -1,10 +1,10 @@
-package be.cronos.keycloak.policy;
+package de.hangy.keycloak.policy;
 
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
-public class Argon2ParallelismPasswordPolicyProviderFactory extends Argon2GenericPolicyProviderFactory {
-    public static final String ID = "argon2Parallelism";
+public class ScryptParallelismPasswordPolicyProviderFactory extends ScryptGenericPolicyProviderFactory {
+    public static final String ID = "scryptParallelism";
     public static final int DEFAULT_PARALLELISM = 1;
 
     @Override
@@ -14,7 +14,7 @@ public class Argon2ParallelismPasswordPolicyProviderFactory extends Argon2Generi
 
     @Override
     public String getDisplayName() {
-        return "Argon2 Parallelism";
+        return "scrypt Parallelism";
     }
 
     @Override

@@ -1,11 +1,11 @@
-package be.cronos.keycloak.policy;
+package de.hangy.keycloak.policy;
 
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
 @Deprecated
-public class Argon2MaxTimePasswordPolicyProviderFactory extends Argon2GenericPolicyProviderFactory {
-    public static final String ID = "argon2MaxTime";
+public class ScryptMaxTimePasswordPolicyProviderFactory extends ScryptGenericPolicyProviderFactory {
+    public static final String ID = "scryptMaxTime";
 
     @Override
     public String getId() {
@@ -14,7 +14,7 @@ public class Argon2MaxTimePasswordPolicyProviderFactory extends Argon2GenericPol
 
     @Override
     public String getDisplayName() {
-        return "Argon2 Maximum Time (in ms)";
+        return "scrypt Maximum Time (in ms)";
     }
 
     @Override

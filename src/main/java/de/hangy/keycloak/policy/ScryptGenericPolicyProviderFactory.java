@@ -1,4 +1,4 @@
-package be.cronos.keycloak.policy;
+package de.hangy.keycloak.policy;
 
 import org.keycloak.Config;
 import org.keycloak.models.KeycloakSession;
@@ -12,10 +12,10 @@ import org.keycloak.policy.PolicyError;
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
-public abstract class Argon2GenericPolicyProviderFactory implements PasswordPolicyProvider, PasswordPolicyProviderFactory {
+public abstract class ScryptGenericPolicyProviderFactory implements PasswordPolicyProvider, PasswordPolicyProviderFactory {
 
     @Override
-    public Argon2GenericPolicyProviderFactory create(KeycloakSession session) {
+    public ScryptGenericPolicyProviderFactory create(KeycloakSession session) {
         return this;
     }
 

@@ -1,10 +1,10 @@
-package be.cronos.keycloak.policy;
+package de.hangy.keycloak.policy;
 
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
-public class Argon2IterationsPasswordPolicyProviderFactory extends Argon2GenericPolicyProviderFactory {
-    public static final String ID = "argon2Iterations";
+public class ScryptIterationsPasswordPolicyProviderFactory extends ScryptGenericPolicyProviderFactory {
+    public static final String ID = "scryptIterations";
     public static final int DEFAULT_ITERATIONS = 1;
 
     @Override
@@ -14,7 +14,7 @@ public class Argon2IterationsPasswordPolicyProviderFactory extends Argon2Generic
 
     @Override
     public String getDisplayName() {
-        return "Argon2 Iterations";
+        return "scrypt Iterations";
     }
 
     @Override

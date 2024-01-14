@@ -1,10 +1,10 @@
-package be.cronos.keycloak.policy;
+package de.hangy.keycloak.policy;
 
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
-public class Argon2MemoryPasswordPolicyProviderFactory extends Argon2GenericPolicyProviderFactory {
-    public static final String ID = "argon2Memory";
+public class ScryptMemoryPasswordPolicyProviderFactory extends ScryptGenericPolicyProviderFactory {
+    public static final String ID = "scryptMemory";
     public static final int DEFAULT_MEMORY = 65536;
 
     @Override
@@ -14,7 +14,7 @@ public class Argon2MemoryPasswordPolicyProviderFactory extends Argon2GenericPoli
 
     @Override
     public String getDisplayName() {
-        return "Argon2 Memory Usage (KB)";
+        return "scrypt Memory Usage (KB)";
     }
 
     @Override
