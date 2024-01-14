@@ -107,8 +107,8 @@ public class ScryptPasswordHashProvider implements PasswordHashProvider {
 
     private ScryptEncodingUtils.ScryptParameters getConfiguredScryptParameters() {
         return new ScryptEncodingUtils.ScryptParameters(
-                getDefaultValue(ScryptMemoryPasswordPolicyProviderFactory.ID, ScryptMemoryPasswordPolicyProviderFactory.DEFAULT_MEMORY),
-                getDefaultValue(ScryptIterationsPasswordPolicyProviderFactory.ID, ScryptIterationsPasswordPolicyProviderFactory.DEFAULT_ITERATIONS),
+                getDefaultValue(ScryptCostPasswordPolicyProviderFactory.ID, ScryptCostPasswordPolicyProviderFactory.DEFAULT_COST),
+                getDefaultValue(ScryptBlockSizePasswordPolicyProviderFactory.ID, ScryptBlockSizePasswordPolicyProviderFactory.DEFAULT_BLOCK_SIZE),
                 getDefaultValue(ScryptParallelismPasswordPolicyProviderFactory.ID, ScryptParallelismPasswordPolicyProviderFactory.DEFAULT_PARALLELISM),
                 getDefaultValue(ScryptHashLengthPasswordPolicyProviderFactory.ID, ScryptHashLengthPasswordPolicyProviderFactory.DEFAULT_HASH_LENGTH),
                 getDefaultValue(ScryptSaltLengthPasswordPolicyProviderFactory.ID, ScryptSaltLengthPasswordPolicyProviderFactory.DEFAULT_SALT_LENGTH)

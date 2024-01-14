@@ -4,7 +4,7 @@ package de.hangy.keycloak.policy;
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
 public class ScryptParallelismPasswordPolicyProviderFactory extends ScryptGenericPolicyProviderFactory {
-    public static final String ID = "scryptParallelism";
+    public static final String ID = "scryptp";
     public static final int DEFAULT_PARALLELISM = 1;
 
     @Override

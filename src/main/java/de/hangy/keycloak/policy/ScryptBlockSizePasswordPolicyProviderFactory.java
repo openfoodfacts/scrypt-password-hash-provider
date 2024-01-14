@@ -3,9 +3,9 @@ package de.hangy.keycloak.policy;
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
-@Deprecated
-public class ScryptMaxTimePasswordPolicyProviderFactory extends ScryptGenericPolicyProviderFactory {
-    public static final String ID = "scryptMaxTime";
+public class ScryptBlockSizePasswordPolicyProviderFactory extends ScryptGenericPolicyProviderFactory {
+    public static final String ID = "scryptr";
+    public static final int DEFAULT_BLOCK_SIZE = 8;
 
     @Override
     public String getId() {
@@ -14,12 +14,12 @@ public class ScryptMaxTimePasswordPolicyProviderFactory extends ScryptGenericPol
 
     @Override
     public String getDisplayName() {
-        return "scrypt Maximum Time (in ms)";
+        return "scrypt block size";
     }
 
     @Override
     public String getDefaultConfigValue() {
-        return String.valueOf(1000);
+        return String.valueOf(DEFAULT_BLOCK_SIZE);
     }
 
 }
