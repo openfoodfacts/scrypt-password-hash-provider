@@ -52,7 +52,7 @@ public class ScryptHelper {
             LOG.debugf("Hashing runtime was %d milliseconds (%d seconds).", end - start, (end - start) / 1000);
 
             // Return an encoded representation of the scrypt password hash
-            return Base64.getEncoder().withoutPadding().encodeToString(result);
+            return Base64.getEncoder().encodeToString(result);
         } catch (Exception e) {
             LOG.errorf("Something went wrong while hashing the password, message = '%s'", e.getMessage());
         }

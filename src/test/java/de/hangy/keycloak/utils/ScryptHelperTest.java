@@ -78,24 +78,24 @@ public class ScryptHelperTest {
         Assertions.assertFalse(verified);
     }
 
-    @Test
-    public void testScryptdVerifyPredefinedHash() {
-        String rawPassword = "supersecret";
-        String hash = "OaqIIbkVDDjH3OvyrkHAsUvIARzbhMD7REHMHmxjdPQ";
-        PasswordCredentialModel passwordCredentialModel = PasswordCredentialModel.createFromValues(
-                ALGORITHM,
-                Base64.getDecoder().decode("kGPbRh+TIQIzn/A2DtHp5dZRMSrqRIrLlrOLPH8a/1A="),
-                DEFAULT_COST,
-                hash);
-        passwordCredentialModel.setSecretData(hash);
-        setAdditionalParameters(
-                passwordCredentialModel,
-                DEFAULT_COST,
-                DEFAULT_BLOCK_SIZE,
-                DEFAULT_PARALLELISM);
-        boolean verified = ScryptHelper.verifyPassword(rawPassword, passwordCredentialModel);
-        Assertions.assertTrue(verified);
-    }
+        @Test
+        public void testScryptdVerifyPredefinedHash() {
+                String rawPassword = "supersecret";
+                String hash = "OaqIIbkVDDjH3OvyrkHAsUvIARzbhMD7REHMHmxjdPQ=";
+                PasswordCredentialModel passwordCredentialModel = PasswordCredentialModel.createFromValues(
+                                ALGORITHM,
+                                Base64.getDecoder().decode("kGPbRh+TIQIzn/A2DtHp5dZRMSrqRIrLlrOLPH8a/1A="),
+                                DEFAULT_COST,
+                                hash);
+                passwordCredentialModel.setSecretData(hash);
+                setAdditionalParameters(
+                                passwordCredentialModel,
+                                DEFAULT_COST,
+                                DEFAULT_BLOCK_SIZE,
+                                DEFAULT_PARALLELISM);
+                boolean verified = ScryptHelper.verifyPassword(rawPassword, passwordCredentialModel);
+                Assertions.assertTrue(verified);
+        }
 
     @Test
     public void testScryptdVerifyPredefinedWrongHash() {
