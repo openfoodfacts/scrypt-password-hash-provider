@@ -1,0 +1,16 @@
+services:
+  keycloak:
+    # FIXME: Add keycloak to docker-compose.yml and/or docker/prod.yml
+    image: ghcr.io/openfoodfacts/scrypt-password-hash-provider:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: start-dev --features="account3,declarative-user-profile"
+    environment:
+      - KEYCLOAK_ADMIN
+      - KEYCLOAK_ADMIN_PASSWORD
+      - KEYCLOAK_BASE_URL
+      - KEYCLOAK_REALM_NAME
+    ports:
+      - "127.0.0.1:${KEYCLOAK_EXPOSE_PORT:-5600}:8080"
+
