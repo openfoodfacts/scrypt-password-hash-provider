@@ -1,3 +1,23 @@
 .login-pf body {
-    background: #f6f3f0 none;
+    background-color: #f6f3f0;
+    background-image: url('https://static.openfoodfacts.org/images/logos/off-logo-horizontal-light.svg');
+    background-size: auto 48px;
+    background-position: 8px 8px;
+    background-repeat: no-repeat;
+}
+
+:root {
+    --pf-global--primary-color--100: #341100;
+}
+
+a {
+    color: #341100;
+}
+
+#kc-header {
+    display: none;
+}
+
+.login-pf-page .card-pf {
+    margin-top: 64px;
 }
