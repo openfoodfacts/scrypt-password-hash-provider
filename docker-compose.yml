@@ -13,4 +13,6 @@ services:
       - KEYCLOAK_REALM_NAME
     ports:
       - "127.0.0.1:${KEYCLOAK_EXPOSE_PORT:-5600}:8080"
+    volumes:
+      - ./themes/off:/opt/keycloak/themes/off
 
