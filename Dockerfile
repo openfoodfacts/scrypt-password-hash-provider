@@ -20,6 +20,9 @@ USER root
 # get the compiled scrypt password hash provider
 COPY --from=builder --chown=keycloak:keycloak /build/target/keycloak-scrypt-*.jar /opt/keycloak/providers/
 
+# Copy in the themes
+COPY --chown=keycloak:keycloak themes/off /opt/keycloak/themes/off
+
 # TODO: standalone import in Keycloak doesn't interpolate environment variables so have to build this outside
 # Ideally ProductOwner would register itself as a client on first startup and store the secret in some kind of vault
 # Should also be able to put this in a temporary directory and delete it afterwards
