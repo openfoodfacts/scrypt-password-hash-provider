@@ -12,6 +12,12 @@ To see how a user logs in you can navigate to: http://localhost:5600/realms/open
 
 This is mostly taken care of. The scrypt has provider ensures users will not need to change their passwords. [README.md](src/README.md)
 
+## Secrity
+
+[ ] Figure out how applications can register a client_id and get a client_secret
+[ ] Work out how to limit access to the management console
+[ ] Make sure any tools that can export users are disabled
+
 ## Theming
 
 Need to decide how similar we want to make the screens to the main pages. Some issues to consider:
@@ -27,6 +33,9 @@ It looks like the CSS classes are very specific and so I suspect these could cha
 We will need to ensure that all of the current OFF locales are covered with suitable translations.
 
 Note that the default account theme, keycloak.v3, doesn't support localization properly. This is [fixed](https://github.com/keycloak/keycloak/issues/22507) but won't be available until verison 24.0.0. 
+
+[ ] Setup Crowdin yaml and GitHub actions
+[ ] Ensure language parameter is passed to Keycloak and back to calling app
 
 ## Fields
 
