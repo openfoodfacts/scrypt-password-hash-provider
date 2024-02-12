@@ -1,17 +1,41 @@
+@import url('common.css');
+
 .login-pf body {
-    background-color: #f6f3f0;
+    background-color: var(--off-secondary-background);
     background-image: url('https://static.openfoodfacts.org/images/logos/off-logo-horizontal-light.svg');
     background-size: auto 48px;
     background-position: 8px 8px;
     background-repeat: no-repeat;
 }
 
+.card-pf {
+    background-color: var(--off-primary-background);
+}
+
 :root {
-    --pf-global--primary-color--100: #341100;
+    --pf-global--primary-color--100: var(--off-primary-action);
+    --pf-global--primary-color--200: var(--off-primary-action-hover);
+
+    --pf-global--BackgroundColor--light-100: var(--off-input-background);
+
+    --pf-global--BorderWidth--sm: var(--off-input-border-width);
 }
 
 a {
-    color: #341100;
+    color: var(--off-primary-action);
+}
+
+.login-pf a:hover {
+    color: var(--off-primary-action-hover);
+}
+
+.pf-c-form-control, .pf-c-input-group, .pf-c-button.pf-m-control {
+    border-radius: var(--off-input-radius);
+}
+
+.pf-c-button.pf-m-block {
+    border-radius: var(--off-button-radius);
+    line-height: 2;
 }
 
 #kc-header {

@@ -1,0 +1,47 @@
+/* This file is shared over all pages. Changes currently need to be manually replicated */
+:root {
+    --black: #000000;
+    --white: #ffffff;
+    --chocolate: #341100;
+    --cappuccino: #EDE0DB;
+    --latte: #F6F3F0;
+    --mocha: #85746C;
+    --macchiato: #A08D84;
+    --cortado: #52443D;
+    --ristreto: #201A17;
+
+    --off-button-radius: 16px;
+    --off-input-radius: 8px;
+
+    --off-input-border-width: 0px;
+}
+
+/* Light mode */
+:root {
+    --off-primary-background: var(--white);
+    --off-primary-text: var(--black);
+    --off-secondary-background: var(--latte);
+    --off-primary-action: var(--chocolate);
+    --off-primary-action-hover: #622000; /* TBA */
+    --off-primary-button-text: var(--white);
+    --off-secondary-action: var(--cappuccino);
+    --off-secondary-action-hover :#cfac9e; /* TBA */
+    --off-secondary-button-text: var(--black);
+    --off-input-background: var(--cappuccino);
+    --off-notification-background: var(--mocha);
+}
+
+/* Dark mode */
+:root .dark {
+    --off-primary-background: var(--black);
+    --off-primary-text: var(--white);
+    --off-secondary-background: var(--cortado);
+    --off-primary-action: var(--white);
+    /* --off-primary-action-hover: #622000; /* TBA */
+    --off-primary-button-text: var(--black);
+    --off-secondary-action: var(--macchiato);
+    /* --off-secondary-action-hover :#cfac9e; /* TBA */
+    --off-secondary-button-text: var(--white);
+    --off-input-background: var(--macchiato);
+    --off-notification-background: var(--cappuccino);
+}

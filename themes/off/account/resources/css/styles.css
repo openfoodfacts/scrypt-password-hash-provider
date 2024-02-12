@@ -1,3 +1,66 @@
-.pf-c-page__main-section {
-    background-color: #f6f3f0;
+@import url('common.css');
+
+:root {
+    /* Header background */
+    --pf-global--BackgroundColor--dark-100: var(--off-secondary-background);
+    /* Main background */
+    --pf-global--BackgroundColor--light-100: var(--off-primary-background);
+    --pf-global--Color--light-200: var(--off-primary-action);
+    --pf-global--primary-color--dark-100: var(--off-secondary-background);
+    --pf-global--primary-color--100: var(--off-primary-action);
+    --pf-global--primary-color--200: var(--off-primary-action-hover);
+    --pf-global--link--Color: var(--off-primary-action);
+    --pf-global--link--Color--hover: var(--off-primary-action-hover);
+
+    /* Sidebar background */
+    --pf-global--BackgroundColor--dark-300: var(--off-notification-background);
+    /* Sidebar active item background */
+    --pf-global--BackgroundColor--dark-400: var(--off-primary-action);
+    /* Sidebar active item hover */
+    --pf-global--BackgroundColor--dark-200: var(--off-primary-action-hover);
+
+    /* Sidebar active left border */
+    --pf-global--active-color--400: var(--off-primary-action);
+
+    --pf-global--BorderRadius--sm: var(--off-button-radius);
+    --pf-global--BorderWidth--sm: var(--off-input-border-width);
+}
+
+.pf-c-button {
+    /* Cancel button background (hard-coded transparent) */
+    --pf-c-button--m-link--BackgroundColor: var(--off-secondary-action);
+    --pf-c-button--m-link--hover--BackgroundColor: var(--off-secondary-action-hover);
+
+    /* Cancel button text */
+    --pf-global--link--Color: var(--off-secondary-button-text);
+    --pf-global--link--Color--hover: var(--off-secondary-button-text);
+}
+
+.pf-c-form-control {
+    /* Input background */
+    --pf-global--BackgroundColor--light-100: var(--off-input-background);
+
+    /* Disabled Input background */
+    --pf-global--disabled-color--300: var(--off-secondary-background);
+
+    --pf-c-form-control--BorderRadius: var(--off-input-radius);
+}
+
+header {
+    --pf-global--BackgroundColor--light-100: var(--off-primary-action);
+    --pf-global--Color--light-100: var(--off-primary-action-hover);
+    --pf-global--BackgroundColor--light-300: var(--off-primary-action-hover);
+}
+
+/* Header logo */
+#brandLink {
+    width: 280px;
+    height: 48px;
+    background-image: url('https://static.openfoodfacts.org/images/logos/off-logo-horizontal-light.svg');
+    background-size: auto 48px;
+    background-repeat: no-repeat;
+}
+
+#brandLink img {
+    display: none;
 }

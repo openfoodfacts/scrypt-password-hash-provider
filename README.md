@@ -28,6 +28,8 @@ Need to decide how similar we want to make the screens to the main pages. Some i
 
 It looks like the CSS classes are very specific and so I suspect these could change with Keycloak releases. We therefore probably want a robust set of tests to ensure that themes are being applied correctly.
 
+Currently the common.css file has to be copied between theme pages (account, login, etc.). Tried using a symlink but this didn't work.
+
 ## Localizaiton
 
 We will need to ensure that all of the current OFF locales are covered with suitable translations.
