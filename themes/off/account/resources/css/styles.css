@@ -47,11 +47,11 @@
     --pf-c-select__toggle--before--BorderWidth: 0;
 }
 
-.pf-m-typeahead {
+.pf-m-typeahead, .pf-c-select .pf-c-select__toggle {
     border-radius: var(--off-input-radius);
 }
 
-.pf-m-expanded .pf-m-typeahead:before {
+.pf-m-expanded .pf-m-typeahead:before, .pf-m-expanded .pf-c-select__toggle:before {
     inset: 0;
     position: absolute;
     content: "";

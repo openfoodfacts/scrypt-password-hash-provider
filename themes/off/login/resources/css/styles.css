@@ -2,7 +2,7 @@
 
 .login-pf body {
     background-color: var(--off-secondary-background);
-    background-image: url('https://static.openfoodfacts.org/images/logos/off-logo-horizontal-light.svg');
+    background-image: url('../img/off-logo-horizontal-light.svg');
     background-size: auto 48px;
     background-position: 8px 8px;
     background-repeat: no-repeat;
