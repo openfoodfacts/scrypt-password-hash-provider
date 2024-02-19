@@ -36,7 +36,7 @@
     --pf-global--link--Color--hover: var(--off-secondary-button-text);
 }
 
-.pf-c-form-control {
+.pf-c-form-control, .pf-c-select {
     /* Input background */
     --pf-global--BackgroundColor--light-100: var(--off-input-background);
 
@@ -44,12 +44,36 @@
     --pf-global--disabled-color--300: var(--off-secondary-background);
 
     --pf-c-form-control--BorderRadius: var(--off-input-radius);
+    --pf-c-select__toggle--before--BorderWidth: 0;
+}
+
+.pf-m-typeahead {
+    border-radius: var(--off-input-radius);
+}
+
+.pf-m-expanded .pf-m-typeahead:before {
+    inset: 0;
+    position: absolute;
+    content: "";
+    border: solid 2px #202020;
+    border-radius: var(--off-input-radius);
 }
 
 header {
-    --pf-global--BackgroundColor--light-100: var(--off-primary-action);
     --pf-global--Color--light-100: var(--off-primary-action-hover);
     --pf-global--BackgroundColor--light-300: var(--off-primary-action-hover);
+}
+
+.pf-c-dropdown {
+    --pf-c-dropdown__menu-item--hover--BackgroundColor: var(--off-secondary-action-hover);
+}
+
+/* Hide "Jump to section" */
+.pf-l-grid>.pf-m-8-col-on-md {
+    --pf-l-grid__item--GridColumnEnd: span 12;
+}
+.pf-l-grid>.pf-m-4-col-on-md {
+    display: none;
 }
 
 /* Header logo */
