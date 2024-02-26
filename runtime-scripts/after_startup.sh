@@ -29,4 +29,7 @@ wait_for_keycloak
 echo "Calling configure_keycloak"
 # shellcheck disable=SC2154 # CUSTOM_SCRIPTS_DIR is defined in Dockerfile.
 # Run migrations and things here
+/opt/keycloak/bin/kcadm.sh update realms/master -f /opt/keycloak/realm_settings.json
+/opt/keycloak/bin/kcadm.sh update realms/open-products-facts -f /opt/keycloak/realm_settings.json
+/opt/keycloak/bin/kcadm.sh update users/profile -f /opt/keycloak/users_profile.json -r open-products-facts
 echo "End of configure_keycloak"

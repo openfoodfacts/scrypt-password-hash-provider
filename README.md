@@ -135,6 +135,19 @@ Fetch the current language and country taxonomies from OFF as part of the releas
 
 We will probably stil need to retain User.sto files for now containing data the user doesn't see for compatibility with OPF, OBF and OPFF.
 
+#### Languages
+
+This list would always show each language in its own translation, e.g. "English, Français, 汉语".
+
+The script will read the language.json and for each langauage use the language_code_2 to look up the name. If no name is found in that language then the "en" translation will be used and if that cannot be found then the id of the entry will be used (with the "en:" prefix).
+
+#### Countries
+
+The basic list will simply consist of placeholders for all the entries which will link to translations in a message file.
+
+The script will therefore have to create a message file for each known language and add all countries to that.
+
+
 ### Backward compatibility
 
 Username password authentication is still needed for now, which will use the password grant type (deprecated in OAuth 2.1).
