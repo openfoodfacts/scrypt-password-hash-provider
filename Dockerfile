@@ -24,7 +24,7 @@ COPY --from=builder --chown=keycloak:keycloak /build/target/keycloak-scrypt-*.ja
 # Ideally ProductOwner would register itself as a client on first startup and store the secret in some kind of vault
 # The import itself is run during the startup script
 COPY --chown=keycloak:keycloak target/open-products-facts-realm.json /opt/keycloak/data/import/open-products-facts-realm.json
-COPY --chown=keycloak:keycloak scripts/* /opt/keycloak
+COPY --chown=keycloak:keycloak runtime-scripts/* /opt/keycloak
 
 RUN chown -R keycloak:root /opt/keycloak
 
