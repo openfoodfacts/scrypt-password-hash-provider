@@ -68,6 +68,8 @@ POST /admin/realms/{realm}/users/{service-account-user-id}/role-mappings/clients
 
 Need to move storage to Postgres. Will also need a script to update the user attributes to a text column https://stackoverflow.com/questions/44851052/max-size-of-custom-user-attribute-in-keycloak
 
+This script will need to run from after_startup.sh. Or maybe could be part of the Delete User event listener. Writing it in Java will avoid installing the full postgres client.
+
 ### Theming
 
 Need to decide how similar we want to make the screens to the main pages. Some issues to consider:
@@ -144,6 +146,12 @@ We will need to update OPF, OBF and OPPF branches to use the password grant type
 ### Delete User
 
 We will need an event listener to pick up the user deleted event so that user names can be wiped from contributions. Maybe create a table in the Keycloak database so we can track for other applications too.
+
+### Making future realm changes
+
+The import realm facility on startup will not update an existing realm with any configuration changes.
+
+The startup.sh script runs an after_startup.sh script in the background which waits for keycloak to start and then can run arbitrary updates to realm configuration.
 
 ## Deprecate Non-keycloak Authentication
 

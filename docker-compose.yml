@@ -5,14 +5,35 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: start-dev --features="account3,declarative-user-profile"
     environment:
       - KEYCLOAK_ADMIN
       - KEYCLOAK_ADMIN_PASSWORD
       - KEYCLOAK_BASE_URL
       - KEYCLOAK_REALM_NAME
+      - KC_DB=postgres
+      - KC_DB_URL_HOST=keycloak_postgres
+      - KC_DB_USERNAME
+      - KC_DB_PASSWORD
+    
     ports:
       - "127.0.0.1:${KEYCLOAK_EXPOSE_PORT:-5600}:8080"
     volumes:
       - ./themes/off:/opt/keycloak/themes/off
+    depends_on:
+      keycloak_postgres:
+        condition: service_started
 
+
+  keycloak_postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_USER=${KC_DB_USERNAME}
+      - POSTGRES_PASSWORD=${KC_DB_PASSWORD}
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    ports:
+      - 5601:5432
+
+
+volumes:
+  dbdata:

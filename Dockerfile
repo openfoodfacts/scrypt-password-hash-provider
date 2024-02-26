@@ -22,16 +22,16 @@ COPY --from=builder --chown=keycloak:keycloak /build/target/keycloak-scrypt-*.ja
 
 # TODO: standalone import in Keycloak doesn't interpolate environment variables so have to build this outside
 # Ideally ProductOwner would register itself as a client on first startup and store the secret in some kind of vault
-# Should also be able to put this in a temporary directory and delete it afterwards
+# The import itself is run during the startup script
 COPY --chown=keycloak:keycloak target/open-products-facts-realm.json /opt/keycloak/data/import/open-products-facts-realm.json
-RUN set -x && \
-    /opt/keycloak/bin/kc.sh import --file /opt/keycloak/data/import/open-products-facts-realm.json
+COPY --chown=keycloak:keycloak scripts/* /opt/keycloak
 
-RUN set -x && \
-    /opt/keycloak/bin/kc.sh build && \
-    chown -R keycloak:root /opt/keycloak
+RUN chown -R keycloak:root /opt/keycloak
 
 # Copy in the themes. Comment this out to use the volume mapping in docker-compose.yml
 COPY --chown=keycloak:keycloak themes/off /opt/keycloak/themes/off
 
 USER keycloak
+
+ENTRYPOINT [ "sh", "/opt/keycloak/startup.sh" ]
+
