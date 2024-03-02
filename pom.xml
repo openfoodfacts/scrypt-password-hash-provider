@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <name>scrypt Password Hash Provider</name>
 
-  <groupId>de.hangy.keycloak</groupId>
+  <groupId>openfoodfacts.github.keycloak</groupId>
   <artifactId>keycloak-scrypt</artifactId>
   <version>${revision}${sha1}${changelist}</version>
   <packaging>jar</packaging>
