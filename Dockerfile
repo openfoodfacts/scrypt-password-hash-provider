@@ -2,7 +2,7 @@
 
 ARG DEPENDENCY_KEYCLOAK_VERSION=23.0.7
 
-# build a scrypt password provider for keycloak using maven
+# build a custom extensions for keycloak using maven
 FROM maven:3-eclipse-temurin-17 AS builder
 
 ARG DEPENDENCY_KEYCLOAK_VERSION
@@ -17,13 +17,13 @@ FROM quay.io/keycloak/keycloak:${DEPENDENCY_KEYCLOAK_VERSION}
 
 USER root
 
-# get the compiled scrypt password hash provider
-COPY --from=builder --chown=keycloak:keycloak /build/target/keycloak-scrypt-*.jar /opt/keycloak/providers/
+# get the compiled extensions
+COPY --from=builder --chown=keycloak:keycloak /build/target/keycloak-extensions-*.jar /opt/keycloak/providers/
 
 # TODO: standalone import in Keycloak doesn't interpolate environment variables so have to build this outside
 # Ideally ProductOwner would register itself as a client on first startup and store the secret in some kind of vault
 # The import itself is run during the startup script
-COPY --chown=keycloak:keycloak target/open-products-facts-realm.json /opt/keycloak/data/import/open-products-facts-realm.json
+COPY --chown=keycloak:keycloak conf/open-products-facts-realm.json /opt/keycloak/data/import/open-products-facts-realm.json
 COPY --chown=keycloak:keycloak runtime-scripts/* /opt/keycloak
 
 RUN chown -R keycloak:root /opt/keycloak

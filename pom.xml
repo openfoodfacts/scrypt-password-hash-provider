@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <name>scrypt Password Hash Provider</name>
+  <name>ProductOpener Keycloak extensions</name>
 
   <groupId>openfoodfacts.github.keycloak</groupId>
-  <artifactId>keycloak-scrypt</artifactId>
+  <artifactId>keycloak-extensions</artifactId>
   <version>${revision}${sha1}${changelist}</version>
   <packaging>jar</packaging>
 
@@ -27,7 +27,7 @@
   </properties>
 
   <build>
-    <finalName>keycloak-scrypt-${project.version}</finalName>
+    <finalName>keycloak-extensions-${project.version}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -100,6 +100,13 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>5.1.1</version>
+    </dependency>
+
   </dependencies>
 
 </project>

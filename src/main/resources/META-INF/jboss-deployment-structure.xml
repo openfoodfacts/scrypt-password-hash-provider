@@ -8,6 +8,7 @@
             <module name="org.keycloak.keycloak-services" export="true" />
             <module name="org.jboss.logging" export="true" />
             <module name="org.bouncycastle" export="true" />
+            <module name="com.fasterxml.jackson.core" export="true" />
         </dependencies>
     </deployment>
 </jboss-deployment-structure>

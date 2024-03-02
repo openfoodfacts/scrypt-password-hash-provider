@@ -2405,5 +2405,6 @@
   },
   "clientPolicies": {
     "policies": []
-  }
+  },
+  "redisUrl": "${REDIS_URL}"
 }
