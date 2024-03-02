@@ -18,7 +18,7 @@ FROM quay.io/keycloak/keycloak:${DEPENDENCY_KEYCLOAK_VERSION}
 USER root
 
 # get the compiled extensions
-COPY --from=builder --chown=keycloak:keycloak /build/target/keycloak-extensions-*.jar /opt/keycloak/providers/
+COPY --from=builder --chown=keycloak:keycloak /build/target/keycloak-extensions-*-jar-with-dependencies.jar /opt/keycloak/providers/
 
 # TODO: standalone import in Keycloak doesn't interpolate environment variables so have to build this outside
 # Ideally ProductOwner would register itself as a client on first startup and store the secret in some kind of vault
