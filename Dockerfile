@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.2
 
-ARG DEPENDENCY_KEYCLOAK_VERSION=23.0.6
+ARG DEPENDENCY_KEYCLOAK_VERSION=23.0.7
 
 # build a scrypt password provider for keycloak using maven
 FROM maven:3-eclipse-temurin-17 AS builder
