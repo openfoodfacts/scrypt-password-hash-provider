@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.models.KeycloakSession;
 import redis.clients.jedis.params.XReadParams;
@@ -19,6 +20,7 @@ import org.keycloak.events.admin.ResourceType;
 import redis.clients.jedis.*;
 
 @Testcontainers
+@DisabledIfEnvironmentVariable(named = "SKIP_INTEGRATION_TESTS", matches = "true")
 public class CorrectOnAdminEventIsForwardedToRedisTest {
 
     @Container

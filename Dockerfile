@@ -10,6 +10,7 @@ WORKDIR /build
 COPY ./src /build/src
 COPY ./pom.xml /build
 RUN set -x && \
+    export SKIP_INTEGRATION_TESTS=true && \
     mvn -B package -Drevision=${DEPENDENCY_KEYCLOAK_VERSION}
 
 ARG DEPENDENCY_KEYCLOAK_VERSION
