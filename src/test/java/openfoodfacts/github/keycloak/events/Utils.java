@@ -155,6 +155,7 @@ class Utils {
             }
 
             @Override
+            @Deprecated
             public <T extends Provider> T getProvider(Class<T> clazz, ComponentModel componentModel) {
                 throw new UnsupportedOperationException("Unimplemented method 'getProvider'");
             }
@@ -1411,11 +1412,13 @@ class Utils {
                     }
 
                     @Override
+                    @Deprecated
                     public Stream<GroupModel> getTopLevelGroupsStream() {
                         throw new UnsupportedOperationException("Unimplemented method 'getTopLevelGroupsStream'");
                     }
 
                     @Override
+                    @Deprecated
                     public Stream<GroupModel> getTopLevelGroupsStream(Integer first, Integer max) {
                         throw new UnsupportedOperationException("Unimplemented method 'getTopLevelGroupsStream'");
                     }
