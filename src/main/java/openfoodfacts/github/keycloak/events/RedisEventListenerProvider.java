@@ -36,8 +36,6 @@ public class RedisEventListenerProvider implements EventListenerProvider {
         log.debugf("New %s Event", event.getType());
 
         if (EventType.DELETE_ACCOUNT.equals(event.getType())) {
-            event.getDetails().forEach((key, value) -> log.debugf("%s : %s", key, value));
-
             RealmModel realm = this.model.getRealm(event.getRealmId());
             UserModel user = this.session.users().getUserById(realm, event.getUserId());
             sendUserData(user, realm);
@@ -45,7 +43,7 @@ public class RedisEventListenerProvider implements EventListenerProvider {
     }
 
     @Override
-    public void onEvent(AdminEvent adminEvent, boolean b) {
+    public void onEvent(AdminEvent adminEvent, boolean includeRepresentation) {
         log.debug("onEvent(AdminEvent)");
         log.debugf("Resource path: %s", adminEvent.getResourcePath());
         log.debugf("Resource type: %s", adminEvent.getResourceType());

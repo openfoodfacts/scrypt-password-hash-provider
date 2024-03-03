@@ -2,13 +2,10 @@ package openfoodfacts.github.keycloak.events;
 
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import redis.clients.jedis.JedisPooled;
+import redis.clients.jedis.StreamEntryID;
 
 public class Client implements AutoCloseable {
-
-    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private final JedisPooled jedis;
 
@@ -17,8 +14,7 @@ public class Client implements AutoCloseable {
     }
 
     public void postUserDeleted(final Map<String, String> userDeletedEvents) {
-        String json = MAPPER.convertValue(userDeletedEvents, String.class);
-        jedis.publish("user-deleted", json);
+        jedis.xadd("user-deleted", StreamEntryID.NEW_ENTRY, userDeletedEvents);
     }
 
     @Override
