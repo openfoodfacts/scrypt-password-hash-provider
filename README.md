@@ -1,3 +1,7 @@
+# Archived
+
+This fork has been archived. The development of our "standalone" Keycloak tools will continue in the [openfoodfacts-auth](https://github.com/openfoodfacts/openfoodfacts-auth) repository. The simple scrypt hash provider can be found [here](https://github.com/hangy/scrypt-password-hash-provider).
+
 # Running Keycloak standalne
 
 First, run `make build` to create the realm.json file with variables substituted. It seems that the standalone import for keycloak does not interpolate variables https://github.com/keycloak/keycloak/issues/12069
